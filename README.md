@@ -1,89 +1,115 @@
-🗂️ Raíz del Proyecto
-Archivo/Carpeta	Descripción
-.env	Variables de entorno globales (por ejemplo, claves API, URLs, etc.).
-.gitignore	Indica qué archivos deben ser ignorados por Git (e.g. node_modules, .env).
-eslint.config.js	Configuración para ESLint (herramienta de linting/corrección de código JS/TS).
+Los requerimientos del proyecto son tener instalado nodeJs y correr el servidor a travez de Xampp que administra el servidor MySql puede encontrar las librerias y programa requerido en :
+
+
+https://nodejs.org/en 
+
+
+https://www.apachefriends.org/es/index.html&ved=2ahUKEwj19eqqnpKNAxX6ppUCHbj-LDEQFnoECA0QAQ&usg=AOvVaw070QKlFA3sQkVc8GooErl2
+
+Tambien se necesita tener acceso a el servidor privado de 
+
+Credenciales hosting:
+victor.duran@ug.uchile.cl
+BlueHosting_Charo4422
+
+para usar el Hositng se tiene:
+
+    -Setup NodeJs para configurar el servidor
+    -Administrador de archivos sonde se sube el proyecto compilado en "public_html"
+    -phpAdmin para administrar la base de datos 
+
+
+
+
+
+
+
+🗂️ Archivos del Proyecto
+
+🗂️Archivos Raiz
+Los rachivos mas relevantes son:
 index.html	Archivo HTML base que Vite usa como punto de entrada.
 jsconfig.json	Configuración de JavaScript para mejorar soporte en editores como VSCode.
 package.json	Lista de dependencias, scripts y metadatos del proyecto.
 package-lock.json	Registro de versiones exactas de dependencias instaladas.
-postcss.config.js	Configuración para PostCSS (procesador de CSS, usado por TailwindCSS).
-README.md	Documento de presentación del proyecto.
-tailwind.config.js	Configuración de TailwindCSS (colores, fuentes, etc.).
-tsconfig.json	Configuración principal de TypeScript.
-tsconfig.app.json, tsconfig.node.json	Subconfiguraciones específicas para frontend y backend.
-vite.config.js / vite.config.ts	Configuración del bundler Vite (build y dev server).
-vite.config.ts.timestamp-*.mjs	Archivo temporal generado automáticamente (puede eliminarse).
+
+
+Los modulos que se usan en "package.json" se pueden reinstalar con "npm intall"
+
+Para poder correr el front en local se encesita el comando
+
+    npm run dev
+
+    
+Para compilar el archivo  y subir al servidor BlueHosting se utiliza el comando
+
+    npm run build
+    
+
 🗂️ Carpeta backend/
 Archivo/Carpeta	Descripción
-.env	Variables de entorno para el backend.
-run.py, test.py	Scripts en Python (probablemente para pruebas o utilidades).
-server.ts, server.js	Servidores escritos en TypeScript/JavaScript.
-config.py	Configuración general o de entorno para scripts Python.
-requirements.txt	Lista de paquetes Python requeridos.
-package.json, package-lock.json	Dependencias si el backend también usa Node.js.
-config/	Archivos de configuración para la base de datos (database.ts y .py).
-routes/	Rutas del backend (por ejemplo, endpoints en main.ts).
-🗂️ Carpeta dist/
 
-    Contiene los archivos generados tras compilar el proyecto (build).
+server.ts, server.js	Servidores escritos en JavaScript.
+Acá se encuentra el servidor que se debe instalar en la pagina blue hosting y que recibe todas las peticiones desde el front.
 
-    No se edita manualmente.
 
-    assets/: Archivos estáticos procesados.
 
-    images/: Copia de las imágenes usadas en la app.
+🗂️ Carpeta dist/ 
+Esta carpeta contiene las 3 cosas que deben subirse al servidor privado
 
-🗂️ Carpeta home/project/src/
 
-    App.tsx: Punto de entrada de la app en esta subcarpeta.
-
-    pages/: Página QuestionPage.tsx, probablemente duplicada de src/pages.
 
 🗂️ Carpeta public/
 
     Contiene imágenes estáticas accesibles públicamente (sin importar en el build).
 
-    No se transpilan ni optimizan como los archivos de src.
+    
 
 🗂️ Carpeta src/ (Frontend principal)
-Archivos raíz
-Archivo	Descripción
-App.tsx	Componente raíz principal.
-index.css	Estilos globales.
-main.tsx / main.js	Punto de entrada para montar la app React.
-vite-env.d.ts	Tipado necesario para trabajar con Vite y TypeScript.
+
 Componentes (src/components/)
 Archivo	Descripción
 ChoiceQuestion.tsx	Pregunta tipo elección.
-LikertQuestion.tsx	Pregunta tipo escala Likert.
-PercentageQuestion.tsx	Pregunta tipo porcentaje.
+LikertQuestion.tsx	Pregunta tipo escala Likert.(preguntas tipo doble seleccion)
+PercentageQuestion.tsx	Pregunta tipo porcentaje.(desarrollada)
 VideoRecorder.tsx	Componente para grabar video (usa Webcam API).
+
+    Esta el codigo principal de la camara la cual hay que manejar con cuidado debido a conflitos con el uso de la camara en los navegadores.
+
+    
 IntroStep.tsx, Layout.tsx, etc.	Elementos de UI reutilizables.
+
 QuestionGroup.tsx, QuestionStep.tsx	Agrupan o gestionan lógica de flujo de preguntas.
+
 Configuración (src/config/)
 
-    questions.ts: Define preguntas utilizadas en los formularios.
+    questions.ts: Define preguntas utilizadas en los formularios. Aca se modifica el contenido de las Video Preguntas
+
 
 Páginas (src/pages/)
-Página	Propósito
-AdminLogin.tsx, AdminDashboard.tsx	Interfaz de administración.
+
+    Aca esta el diseño de cada uno de las paginas, en la parte de preguntas 
+    
+
+
+
 IntroPage.tsx, QuestionPage.tsx	Flujo del cuestionario.
 ReviewPage.tsx, SuccessPage.tsx	Resultados y fin del cuestionario.
-Servicios (src/services/)
-Archivo	Función
+
 api.ts	Funciones de comunicación con el backend.
-auth.ts, admin.ts	Funciones relacionadas a autenticación o administración.
-downloads.ts	Descarga de datos, posiblemente resultados en CSV o ZIP.
-Almacenamiento (src/store/)
-
-    formStore.ts: Store de Zustand para manejar el estado global del formulario.
-
-Tipos (src/types/)
-
-    index.ts: Interfaces y tipos TypeScript usados en la aplicación.
 
 
+    Acá está la parte crucial para la comunicación con el servidor, ya que se debe sincronizar el envío y la respuesta para el correcto funcionamiento del proyecto.
+
+Otra parte importante es la definición de parámetros globales para la interacción entre el frontend y el backend.
+formStore.ts: Store de Zustand para manejar el estado global del formulario.
+
+Otros detalles a nivel usuario son las credenciales y donde se encuentra todo en el hosting:
+
+
+
+
+Detalles tecnicos del proyecto
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 # Video Survey Application
 
