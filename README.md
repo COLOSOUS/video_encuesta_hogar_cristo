@@ -1,113 +1,115 @@
-Los requerimientos del proyecto son tener instalado nodeJs y correr el servidor a travez de Xampp que administra el servidor MySql puede encontrar las librerias y programa requerido en :
 
 
-https://nodejs.org/en 
+Guía de Instalación y Estructura del Proyecto
+Requerimientos
 
+Para ejecutar correctamente este proyecto, es necesario contar con:
 
-https://www.apachefriends.org/es/index.html&ved=2ahUKEwj19eqqnpKNAxX6ppUCHbj-LDEQFnoECA0QAQ&usg=AOvVaw070QKlFA3sQkVc8GooErl2
+    Node.js instalado en el sistema:
+    https://nodejs.org/en
 
-Tambien se necesita tener acceso a el servidor privado de 
+    XAMPP para gestionar el servidor MySQL:
+    https://www.apachefriends.org/es/index.html
 
-Credenciales hosting:
+También se requiere acceso al servidor privado de hosting.
+Credenciales de Hosting
 
-    User: victor.duran@ug.uchile.cl
+Usuario: victor.duran@ug.uchile.cl  
+Contraseña: BlueHosting_Charo4422
 
-    Pass: BlueHosting_Charo4422
+El hosting dispone de las siguientes herramientas:
 
-para usar el Hositng se tiene:
+    Node.js Setup: para configurar y ejecutar el servidor.
 
-    -Setup NodeJs para configurar el servidor
-    -Administrador de archivos sonde se sube el proyecto compilado en "public_html"
-    -phpAdmin para administrar la base de datos 
+    Administrador de Archivos: para subir el proyecto compilado dentro de la carpeta public_html.
 
+    phpMyAdmin: para gestionar la base de datos MySQL.
 
-
-
-
-
-
-🗂️ Archivos del Proyecto
-
-🗂️Archivos Raiz
-Los rachivos mas relevantes son:
-index.html	Archivo HTML base que Vite usa como punto de entrada.
-jsconfig.json	Configuración de JavaScript para mejorar soporte en editores como VSCode.
-package.json	Lista de dependencias, scripts y metadatos del proyecto.
-package-lock.json	Registro de versiones exactas de dependencias instaladas.
-
-
-Los modulos que se usan en "package.json" se pueden reinstalar con "npm intall"
-
-Para poder correr el front en local se encesita el comando
-
-    npm run dev
-
-    
-Para compilar el archivo  y subir al servidor BlueHosting se utiliza el comando
-
-    npm run build
-    
-
-🗂️ Carpeta backend/
-Archivo/Carpeta	Descripción
-
-server.ts, server.js	Servidores escritos en JavaScript.
-Acá se encuentra el servidor que se debe instalar en la pagina blue hosting y que recibe todas las peticiones desde el front.
-
-
-
-🗂️ Carpeta dist/ 
-Esta carpeta contiene las 3 cosas que deben subirse al servidor privado
-
-
-
-🗂️ Carpeta public/
-
-    Contiene imágenes estáticas accesibles públicamente (sin importar en el build).
-
-    
-
-🗂️ Carpeta src/ (Frontend principal)
-
-Componentes (src/components/)
+Archivos del Proyecto
+Archivos en la raíz
 Archivo	Descripción
-ChoiceQuestion.tsx	Pregunta tipo elección.
-LikertQuestion.tsx	Pregunta tipo escala Likert.(preguntas tipo doble seleccion)
-PercentageQuestion.tsx	Pregunta tipo porcentaje.(desarrollada)
-VideoRecorder.tsx	Componente para grabar video (usa Webcam API).
+index.html	Archivo HTML base que Vite usa como punto de entrada.
+jsconfig.json	Configuración de JavaScript para mejorar el soporte en editores como VSCode.
+package.json	Lista de dependencias, scripts y metadatos del proyecto.
+package-lock.json	Registro de versiones exactas de las dependencias instaladas.
 
-    Esta el codigo principal de la camara la cual hay que manejar con cuidado debido a conflitos con el uso de la camara en los navegadores.
+Para instalar las dependencias, ejecutar:
 
-    
-IntroStep.tsx, Layout.tsx, etc.	Elementos de UI reutilizables.
+npm install
 
-QuestionGroup.tsx, QuestionStep.tsx	Agrupan o gestionan lógica de flujo de preguntas.
+Comandos útiles
 
-Configuración (src/config/)
+    Para ejecutar el frontend en desarrollo local:
 
-    questions.ts: Define preguntas utilizadas en los formularios. Aca se modifica el contenido de las Video Preguntas
+npm run dev
 
+    Para compilar el proyecto y subirlo al servidor BlueHosting:
 
-Páginas (src/pages/)
+npm run build
 
-    Aca esta el diseño de cada uno de las paginas, en la parte de preguntas 
-    
+Estructura de Carpetas
+/backend
 
+Contiene los archivos del servidor. Los más relevantes son:
 
+    server.ts, server.js: código del servidor que recibe las peticiones del frontend.
+    Este servidor debe ser instalado y ejecutado en el hosting.
 
-IntroPage.tsx, QuestionPage.tsx	Flujo del cuestionario.
-ReviewPage.tsx, SuccessPage.tsx	Resultados y fin del cuestionario.
+    config/: configuración de base de datos (tanto en Python como en TypeScript).
 
-api.ts	Funciones de comunicación con el backend.
+    routes/: definición de rutas del backend (main.ts).
 
+/dist
 
-    Acá está la parte crucial para la comunicación con el servidor, ya que se debe sincronizar el envío y la respuesta para el correcto funcionamiento del proyecto.
+Carpeta generada tras ejecutar npm run build.
+Esta carpeta debe subirse al hosting, incluye:
 
-Otra parte importante es la definición de parámetros globales para la interacción entre el frontend y el backend.
-formStore.ts: Store de Zustand para manejar el estado global del formulario.
+    Archivos HTML y JavaScript compilados.
 
-Otros detalles a nivel usuario son las credenciales y donde se encuentra todo en el hosting:
+    Archivos estáticos e imágenes requeridas para el funcionamiento del frontend.
 
+/public
+
+Contiene imágenes estáticas accesibles públicamente (no se ven afectadas por el proceso de compilación).
+/src (Frontend principal)
+components/
+Componente	Descripción
+ChoiceQuestion.tsx	Componente para preguntas de selección múltiple.
+LikertQuestion.tsx	Componente para preguntas de tipo escala Likert.
+PercentageQuestion.tsx	Componente para preguntas de tipo porcentaje.
+VideoRecorder.tsx	Componente que permite grabar video mediante la API de la cámara.
+
+    ⚠️ El uso de la cámara debe manejarse con cuidado, debido a posibles conflictos en distintos navegadores.
+
+Otros componentes:
+IntroStep.tsx, Layout.tsx, QuestionGroup.tsx, QuestionStep.tsx
+Estos definen estructuras reutilizables y la lógica del flujo de preguntas.
+config/
+
+    questions.ts: archivo donde se definen las preguntas utilizadas en los formularios.
+    Aquí se puede modificar el contenido de las preguntas con video.
+
+pages/
+
+Define la estructura y diseño de las distintas páginas del sistema.
+Página	Función
+IntroPage.tsx	Página de introducción.
+QuestionPage.tsx	Página de preguntas del cuestionario.
+ReviewPage.tsx	Página de revisión de respuestas.
+SuccessPage.tsx	Página de finalización.
+services/
+
+    api.ts: contiene las funciones que gestionan la comunicación entre el frontend y el backend.
+    Esta capa es crucial para el correcto funcionamiento del proyecto.
+
+store/
+
+    formStore.ts: contiene la lógica de estado global utilizando Zustand, útil para compartir datos entre componentes.
+
+Información Adicional
+
+Todos los archivos y recursos se encuentran dentro del hosting indicado.
+Se recomienda revisar el contenido de la carpeta dist/ antes de cada subida, asegurando que el build esté actualizado.
 
 
 
