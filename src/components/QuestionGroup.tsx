@@ -6,6 +6,7 @@ import { QuestionStep } from './QuestionStep';
 import { PercentageQuestion } from './PercentageQuestion';
 import { useFormStore } from '../store/formStore';
 
+
 interface QuestionGroupProps {
   questions: Question[];
   groupId: string;
@@ -43,23 +44,6 @@ export const QuestionGroup: React.FC<QuestionGroupProps> = ({
 
   const showAutoFill = groupId === 'personality';
 
-  // Verificar si todas las preguntas de tipo video ya fueron respondidas
-  const handleVideoRecorded = (questionId: string, blob: Blob) => {
-    onVideoRecorded(questionId, blob);
-
-    const videoQuestions = questions.filter(q => q.type === 'video');
-    const allAnswered = videoQuestions.every(
-      q => getVideoByQuestionId(q.id)?.blob
-    );
-
-    if (allAnswered) {
-      // Apagar la cámara si se respondieron todas
-      navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then(stream => {
-        stream.getTracks().forEach(track => track.stop());
-      });
-    }
-  };
-
   return (
     <div className="space-y-8">
       {showAutoFill && (
@@ -82,10 +66,11 @@ export const QuestionGroup: React.FC<QuestionGroupProps> = ({
           {question.type === 'video' && (
             <QuestionStep
               question={question}
-              onVideoRecorded={handleVideoRecorded}
+              onVideoRecorded={onVideoRecorded}
             />
           )}
           {question.type === 'choice' && (
+            
             <ChoiceQuestion
               question={question}
               onAnswerSelected={onAnswerSelected}

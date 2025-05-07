@@ -8,9 +8,15 @@ interface QuestionStepProps {
   onVideoRecorded: (questionId: string, blob: Blob) => void;
 }
 
-
 export const QuestionStep: React.FC<QuestionStepProps> = ({ question, onVideoRecorded }) => {
+
+const labels=question.label
+const getRandomLabel = () => {
+  const randomIndex = Math.floor(Math.random() * labels.length);
+  return labels[randomIndex];
+};
   return (
+
     <div className="space-y-6">
       <div className="relative">
       <div className="grid grid-cols-[100%,3%] items-start">
@@ -24,40 +30,36 @@ export const QuestionStep: React.FC<QuestionStepProps> = ({ question, onVideoRec
 
 
 
-
+      
       <div>
-      {question.label.split("\\n").map((part, index) => {
+      {getRandomLabel().split("\\n").map((part, index) => {
     // Define los estilos según el valor de `question.id`
     let sizeClass = "";
     if (question.id === "video1") {
       sizeClass = index === 0 
-      ?"text-xl font-semibold text-gray-200 mb-4 text-center" 
+      ?"text-xl font-semibold text-gray-200 mb-4" 
       : index === 1 
-      ? "text-2xl font-bold text-gray-200 text-center"
-      
-      : "text-xl font-semibold text-gray-200 mb-4 text-center max-w-xl mx-auto" ;
+      ? "text-xl font-semibold text-gray-200 mb-4" 
+      : "text-2xl font-bold text-gray-200";
     } else if (question.id === "video2") {
       sizeClass = index === 0 
-      ?"text-xl font-semibold text-gray-200 mb-4 text-center" 
+      ?"text-xl font-semibold text-gray-200 mb-4" 
       : index === 1 
-      ? "text-2xl font-bold text-gray-200 text-center"
-      
-      : "text-xl font-semibold text-gray-200 mb-4 text-center max-w-xl mx-auto" ;
+      ? "text-xl font-semibold text-gray-200 mb-4" 
+      : "text-2xl font-bold text-gray-200";
     } else if (question.id === "video3") {
       sizeClass = index === 0 
-      ?"text-xl font-semibold text-gray-200 mb-4 text-center" 
+      ?"text-xl font-semibold text-gray-200 mb-4" 
       : index === 1 
-      ? "text-2xl font-bold text-gray-200 text-center"
-      
-      : "text-xl font-semibold text-gray-200 mb-4 text-center max-w-xl mx-auto" ;
+      ? "text-xl font-semibold text-gray-200 mb-4" 
+      : "text-2xl font-bold text-gray-200";
 
     } else if (question.id === "video4") {
       sizeClass = index === 0 
-      ?"text-xl font-semibold text-gray-200 mb-4 text-center" 
+      ?"text-xl font-semibold text-gray-200 mb-4" 
       : index === 1 
-      ? "text-2xl font-bold text-gray-200 text-center"
-      
-      : "text-xl font-semibold text-gray-200 mb-4 text-center max-w-xl mx-auto" ;
+      ? "text-xl font-semibold text-gray-200 mb-4" 
+      : "text-2xl font-bold text-gray-200";
 
     } 
     

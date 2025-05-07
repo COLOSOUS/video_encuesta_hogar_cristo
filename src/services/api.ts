@@ -1,7 +1,8 @@
 import axios from 'axios';
 import { FormSubmission } from '../types';
 
-const API_URL = 'https://formulariohc.cl';
+//const API_URL = 'https://formulariohc.cl';
+const API_URL = 'http://localhost:3500'
 
 let percentageSaved = false; // Para asegurarnos de que el porcentaje se guarda solo una vez
 
@@ -126,7 +127,7 @@ export const savePercentageValue = async (submissionId: string, value: number) =
       value,
     });
 
-    if (response.status !== 200) {
+    if (response.status !== 200 ) {
       throw new Error('Error al guardar el valor porcentual');
     }
 

@@ -4,66 +4,45 @@ import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { QuestionGroup } from '../components/QuestionGroup';
 import { useFormStore } from '../store/formStore';
 import { questionGroups, questions } from '../config/questions';
-import { recordPageTimestamp, savePercentageValue } from '../services/api';
-
 
 export const QuestionPage: React.FC = () => {
-
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const { addVideo, addAnswer, getVideoByQuestionId, getAnswerByQuestionId, submissionId } = useFormStore();
+  const { 
+    addVideo, 
+    addAnswer, 
+    getVideoByQuestionId, 
+    getAnswerByQuestionId,
+    updateProgress,
+    currentStep 
+  } = useFormStore();
 
   const currentGroupIndex = questionGroups.findIndex(g => g.id === id);
   const group = questionGroups[currentGroupIndex];
 
   useEffect(() => {
-    // Asegúrate de que la página haga scroll hacia arriba
-     window.scrollTo({ top: 0, behavior: 'smooth' });
-    if (submissionId && id) {
-      const pageName = `question_${id}`;
-      recordPageTimestamp(submissionId, pageName);
-    } else {
-      console.error("Missing submissionId or id");
+    if (group) {
+      updateProgress(currentGroupIndex);
     }
-
-    if (submissionId && id) {
-      const pageName = `question_${id}`;
-      recordPageTimestamp(submissionId, pageName);
-      console.log('Submitting with submissionId:', submissionId, 'and pageName:', `question_${id}`);
-      
-    } else {
-      console.error('Missing submissionId or pageName');
-    }
-  }, [id, submissionId]);
+  }, [group, currentGroupIndex, updateProgress]);
 
   if (!group) {
     return <Navigate to="/" replace />;
   }
 
-  const handleVideoRecorded = (questionId: string, blob: Blob) => {
-    addVideo(questionId, blob);
+  const handleVideoRecorded = async (questionId: string, blob: Blob) => {
+    await addVideo(questionId, blob);
   };
 
   const handleAnswerSelected = async (questionId: string, answer: any) => {
-    addAnswer(questionId, answer);
-
-    // If this is a percentage question, save it separately
-    if (questionId === 'tactics_percentage' && submissionId) {
-      await savePercentageValue(submissionId, answer);
-    }
+    await addAnswer(questionId, answer);
   };
 
   const handleNext = () => {
-    
-    console.log("Revisar s_id",submissionId)
     if (currentGroupIndex === questionGroups.length - 1) {
       navigate('/review');
-      // Asegúrate de que la página haga scroll hacia arriba
-    window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
       navigate(`/question/${questionGroups[currentGroupIndex + 1].id}`);
-      // Asegúrate de que la página haga scroll hacia arriba
-      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
@@ -105,27 +84,19 @@ export const QuestionPage: React.FC = () => {
           <div className="bg-gray-800/90 backdrop-blur-sm rounded-xl p-6 shadow-xl">
             <div className="mb-6">
               <h2 className="text-2xl font-bold text-white mb-2">{group.title}</h2>
-              <p className="text-xl font-semibold text-gray-200 mb-4">
-  {group.id === "personality" ? (
-  <>
-  <ul className="list-disc pl-6">
-    <li>Te presentaremos 24 grupos de cuatro palabras cada grupo.</li>
-    <li>En cada grupo de cuatro palabras, debes escoger dos palabras:</li>
-    <li>La que más te representa, marcándola en la columna “Más”.</li>
-    <li>La que menos te representa, marcándola en la columna “Menos”.</li>
-    <li>No hay respuestas correctas ni incorrectas.</li>
-  </ul>
-</>
-  ) : (
-    <>{group.description}</>
-  )}
-</p>
-            </div>
+              <p className="text-gray-400">{group.description}</p>
+            </div>  
 
             <div className="mb-4">
               <p className="text-sm text-gray-400">
                 Sección {currentGroupIndex + 1} de {questionGroups.length}
               </p>
+              <div className="w-full bg-gray-700 h-2 rounded-full mt-2">
+                <div 
+                  className="bg-orange-500 h-2 rounded-full transition-all duration-300"
+                  style={{ width: `${(currentStep / (questionGroups.length - 1)) * 100}%` }}
+                />
+              </div>
             </div>
 
             <QuestionGroup
@@ -157,18 +128,10 @@ export const QuestionPage: React.FC = () => {
               >
                 <span>
                   {!isGroupComplete 
-                    ? 'Siguiente'
-                    : currentGroupIndex === 0 
-                      ? 'Siguiente'
-                      : currentGroupIndex === 1 
-                        ? 'Siguiente'
-                        : currentGroupIndex === 2
-                        ? 'Siguiente'
-                        : currentGroupIndex === 3 
-                          ? 'Siguiente'
-                        : currentGroupIndex === questionGroups.length - 1 
-                          ? 'Terminar Encuesta'
-                          : 'Siguiente'
+                    ? 'Complete todas las preguntas'
+                    : currentGroupIndex === questionGroups.length - 1 
+                      ? 'Finalizar Encuesta'
+                      : 'Siguiente'
                   }
                 </span>
                 <ArrowRight className="w-5 h-5" />

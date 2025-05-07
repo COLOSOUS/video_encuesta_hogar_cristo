@@ -38,7 +38,7 @@ export const questionGroups: QuestionGroup[] = [
       {
         id: 'video1',
         type: 'video',
-        label: ' Ves a esta pareja en la calle.\\n ¿Qué le dirías para que se detenga a escucharte? \\n \\n Piensa un momento tu respuesta y luego graba.        Graba como si le fueras a hablar a ella directamente.\\n Tu respuesta puede durar lo que estimes conveniente para lograr que la persona se detenga a escucharte.',
+        label: ['Mensaje A1','Mensaje B1'],
         imageUrl: '/images/imagen5.png',
         groupId: 'video1'
       }
@@ -52,8 +52,8 @@ export const questionGroups: QuestionGroup[] = [
       {
         id: 'video2',
         type: 'video',
-        label:    '¿Qué les dirías para que se detengan a escucharte?\\n Piensa un momento tu respuesta y luego grábala. \\n \\n Piensa un momento tu respuesta y luego grábala.\\n Graba como si les fueras a hablar a ellos directamente.\\n Tu respuesta puede durar lo que estimes conveniente para lograr que la pareja se detenga a escucharte. ',
-          imageUrl: '/images/imagen6.png',
+        label:['Mensaje A2','Mensaje B2'],
+        imageUrl: '/images/imagen6.png',
         groupId: 'video2'
       }
     ]
@@ -66,7 +66,7 @@ export const questionGroups: QuestionGroup[] = [
       {
         id: 'video3',
         type: 'video',
-        label: 'Imagina que ya lograste que esta persona se detuviera a escucharte. Ahora debes hablarle para persuadirla para que se haga socia del Hogar.\\n \\n Piensa un momento tu respuesta y luego grábala.\\nGraba como si le fueras a hablar a ella directamente.\\n Tu respuesta puede durar lo que estimes conveniente para lograr que la persona se detenga a escucharte.',
+        label: ['Mensaje A3','Mensaje B3'],
         imageUrl: '/images/imagen1.jpg',
         groupId: 'video3'
       }
@@ -80,7 +80,7 @@ export const questionGroups: QuestionGroup[] = [
       {
         id: 'video4',
         type: 'video',
-        label: 'Imagina que ya lograste que esta persona se detuviera a escucharte. Ahora debes hablarle para persuadirla para que se haga socia del Hogar.\\n \\n Piensa un momento tu respuesta y luego grábala.\\n Graba como si le fueras a hablar a ella directamente.\\n Tu respuesta puede durar lo que estimes conveniente para lograr que la persona se detenga a escucharte.',
+        label: ['Mensaje A4','Mensaje B4'],
         imageUrl: '/images/imagen3.jpg',
         groupId: 'video4'
       }
@@ -95,9 +95,9 @@ export const questionGroups: QuestionGroup[] = [
       {
         id: 'tactics_percentage',
         type: 'percentage',
-        label: `¿Qué porcentaje de las tácticas/estrategias para captar socios has desarrollado tú mismo 
+        label: [`¿Qué porcentaje de las tácticas/estrategias para captar socios has desarrollado tú mismo 
               (es decir, a través de tu propia experiencia) en comparación a lo que has aprendido de 
-              otras personas en el Hogar De Cristo? (supervisores u otros captadores)`, groupId: 'experience'
+              otras personas en el Hogar De Cristo? (supervisores u otros captadores)`], groupId: 'experience'
       }
     ]
   },

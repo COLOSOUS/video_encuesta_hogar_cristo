@@ -1,7 +1,7 @@
 // Interfaces
 export interface Question {
   id: string;
-  label: string;
+  label: string[];
   type: 'video' | 'choice' | 'likert' | 'percentage';
   groupId?: string;
   imageUrl?: string;

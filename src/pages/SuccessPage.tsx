@@ -47,34 +47,28 @@ export const SuccessPage: React.FC = () => {
             </div>
 
             <div className="prose prose-invert max-w-none">
-  <p className="text-lg font-semibold mb-4">Muchas gracias</p>
+              <p className="text-lg font-semibold mb-4">Muchas gracias</p>
 
-  <p className="text-gray-300 leading-relaxed mb-4">
-    Queremos agradecerte sinceramente por tu participación en esta simulación de ventas. 
-    Tu compromiso y dedicación han sido fundamentales para el éxito de este ejercicio.
-  </p>
+              <p className="text-gray-300 leading-relaxed mb-4">
+                Queremos agradecerte sinceramente por tu participación en esta simulación de ventas.
+                Tu compromiso y dedicación han sido fundamentales para el éxito de este ejercicio.
+                Los resultados obtenidos serán clave para mejorar nuestras prácticas comerciales.
+              </p>
 
-  <p className="text-gray-300 leading-relaxed mb-4">
-    ¡Recuerda que en el plazo de máximo una semana te enviaremos a tu correo el informe con los resultados del test de personalidad para que aprendas de ti mismo!
-  </p>
+              <p className="text-gray-300 leading-relaxed mb-4">
+                Esperamos que el informe con las mejores prácticas identificadas sea de gran ayuda
+                para perfeccionar aún más tus estrategias de ventas.
+              </p>
 
-  <p className="text-gray-300 leading-relaxed mb-4">
-    Gracias nuevamente por tu valioso aporte y disposición durante esta experiencia.
-  </p>
+              <p className="text-gray-300 leading-relaxed mb-4">
+                Gracias nuevamente por tu valioso aporte y disposición durante esta experiencia.
+              </p>
 
-  <p className="text-gray-300 leading-relaxed mb-4">
-    Si tienes dudas y quieres comunicarte con el equipo investigador, puedes contactarnos a:<br />
-    <span className="font-medium">encuestaHdC@uc.cl</span>
-  </p>
-
-  <p className="text-gray-300 leading-relaxed">
-    Saludos cordiales,<br />
-    El equipo investigador de la Universidad Católica y<br />
-    Gerencia de Recursos Humanos,<br />
-    Dirección Nacional de Recursos<br />
-    Hogar de Cristo
-  </p>
-</div>
+              <p className="text-gray-300 leading-relaxed">
+                Saludos cordiales,<br />
+                El equipo de ventas
+              </p>
+            </div>
             <div className="mt-8 text-center">
             
             </div>

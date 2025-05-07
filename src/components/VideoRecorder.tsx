@@ -29,9 +29,7 @@ export const VideoRecorder: React.FC<VideoRecorderProps> = ({ questionId, onVide
         const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
         setCurrentStream(stream);
         setPermissionsGranted(true);
-        if (webcamRef.current?.video) {
-          webcamRef.current.video.srcObject = stream;
-        }
+        console.log('Permisos otorgados');
       } catch (error) {
         console.error('Error al solicitar permisos:', error);
         setPermissionsGranted(false);
@@ -45,7 +43,7 @@ export const VideoRecorder: React.FC<VideoRecorderProps> = ({ questionId, onVide
         currentStream.getTracks().forEach((track) => track.stop());
       }
     };
-  }, []);
+  }, [currentStream]);
 
   const handleStartCapture = useCallback(() => {
     if (!webcamRef.current?.stream) return;
@@ -55,7 +53,10 @@ export const VideoRecorder: React.FC<VideoRecorderProps> = ({ questionId, onVide
     setRecordedBlob(null);
 
     const stream = webcamRef.current.stream;
-    const mimeType = MediaRecorder.isTypeSupported('video/mp4') ? 'video/mp4' : 'video/webm';
+
+    const mimeType = MediaRecorder.isTypeSupported('video/mp4')
+      ? 'video/mp4'
+      : 'video/webm';
 
     const recorder = new MediaRecorder(stream, { mimeType });
 
@@ -71,12 +72,6 @@ export const VideoRecorder: React.FC<VideoRecorderProps> = ({ questionId, onVide
       onVideoRecorded(questionId, blob);
       chunksRef.current = [];
       setCapturing(false);
-
-      // Apagar cámara al terminar
-      if (webcamRef.current?.stream) {
-        webcamRef.current.stream.getTracks().forEach((track) => track.stop());
-        setCurrentStream(null);
-      }
     };
 
     mediaRecorderRef.current = recorder;
@@ -98,9 +93,33 @@ export const VideoRecorder: React.FC<VideoRecorderProps> = ({ questionId, onVide
     }
   }, [capturing]);
 
+  const toggleCamera = useCallback(() => {
+    setFacingMode((prev) => (prev === 'user' ? 'environment' : 'user'));
+  }, []);
+
+  const restartCamera = useCallback(() => {
+    if (currentStream) {
+      // Detener y liberar los recursos de la cámara actual
+      currentStream.getTracks().forEach((track) => track.stop());
+
+      // Reiniciar flujo de medios
+      navigator.mediaDevices
+        .getUserMedia({ video: { ...videoConstraints, facingMode }, audio: true })
+        .then((stream) => {
+          setCurrentStream(stream); // Guardamos el nuevo flujo
+          if (webcamRef.current?.video) {
+            webcamRef.current.video.srcObject = stream;
+          }
+        })
+        .catch((error) => {
+          console.error('Error reiniciando la cámara:', error);
+        });
+    }
+  }, [facingMode, currentStream]);
+
   if (!permissionsGranted) {
     return (
-      <div className="text-center text-white">
+      <div className="text-center">
         <p>No se han otorgado permisos para acceder a la cámara. Por favor, permite el acceso.</p>
       </div>
     );
@@ -117,6 +136,13 @@ export const VideoRecorder: React.FC<VideoRecorderProps> = ({ questionId, onVide
             videoConstraints={{ ...videoConstraints, facingMode }}
             className="w-full h-full rounded-lg object-cover"
           />
+          <button
+            onClick={toggleCamera}
+            className="absolute top-4 right-4 p-2 bg-gray-800 rounded-full hover:bg-gray-700"
+            type="button"
+          >
+            <Camera className="w-6 h-6" />
+          </button>
         </div>
 
         <div className="flex justify-center space-x-4">
@@ -153,6 +179,16 @@ export const VideoRecorder: React.FC<VideoRecorderProps> = ({ questionId, onVide
             </button>
           )}
         </div>
+
+        <div className="flex justify-center space-x-4">
+          <button
+            onClick={restartCamera}
+            className="flex items-center space-x-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg"
+            type="button"
+          >
+            <span>Reiniciar Cámara</span>
+          </button>
+        </div>
       </div>
 
       {recordedBlob && (
@@ -164,4 +200,4 @@ export const VideoRecorder: React.FC<VideoRecorderProps> = ({ questionId, onVide
       )}
     </div>
   );
-};
+}; 

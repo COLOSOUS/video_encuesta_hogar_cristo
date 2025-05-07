@@ -39,11 +39,12 @@ export const ExperienceQuestion: React.FC = () => {
             <h2 className="text-3xl font-bold text-white mb-6">
               Tu Experiencia en Captación
             </h2>
-            <p className="text-4xl text-gray-300 leading-relaxed text-center">
-  ¿Qué porcentaje de las tácticas/estrategias para captar socios has desarrollado tú mismo 
-  (es decir, a través de tu propia experiencia) en comparación a lo que has aprendido de 
-  otras personas en el Hogar De Cristo? (supervisores u otros captadores)
-</p>
+            <p className="text-xl text-gray-300 leading-relaxed">
+              ¿Qué porcentaje de las tácticas/estrategias para captar socios has desarrollado tú mismo 
+              (es decir, a través de tu propia experiencia) en comparación a lo que has aprendido de 
+              otras personas en el Hogar De Cristo? (supervisores u otros captadores)
+            </p>
+            
           </div>
 
               <div className="max-w-2xl mx-auto">
