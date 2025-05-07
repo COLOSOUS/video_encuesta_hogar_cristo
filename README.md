@@ -9,8 +9,10 @@ https://www.apachefriends.org/es/index.html&ved=2ahUKEwj19eqqnpKNAxX6ppUCHbj-LDE
 Tambien se necesita tener acceso a el servidor privado de 
 
 Credenciales hosting:
-victor.duran@ug.uchile.cl
-BlueHosting_Charo4422
+
+    User: victor.duran@ug.uchile.cl
+
+    Pass: BlueHosting_Charo4422
 
 para usar el Hositng se tiene:
 
