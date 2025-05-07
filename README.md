@@ -1,119 +1,128 @@
+# Proyecto de Encuesta con Grabación de Video
 
+## Requerimientos
 
-Guía de Instalación y Estructura del Proyecto
-Requerimientos
+Para ejecutar correctamente este proyecto, es necesario contar con los siguientes elementos instalados en el entorno local:
 
-Para ejecutar correctamente este proyecto, es necesario contar con:
-
-    Node.js instalado en el sistema:
-    https://nodejs.org/en
-
-    XAMPP para gestionar el servidor MySQL:
-    https://www.apachefriends.org/es/index.html
+- [Node.js](https://nodejs.org/en)  
+- [XAMPP (Servidor MySQL)](https://www.apachefriends.org/es/index.html)
 
 También se requiere acceso al servidor privado de hosting.
-Credenciales de Hosting
 
-Usuario: victor.duran@ug.uchile.cl  
+### Credenciales del Hosting
+Usuario: victor.duran@ug.uchile.cl
 Contraseña: BlueHosting_Charo4422
 
-El hosting dispone de las siguientes herramientas:
 
-    Node.js Setup: para configurar y ejecutar el servidor.
+### Herramientas Disponibles en el Hosting
 
-    Administrador de Archivos: para subir el proyecto compilado dentro de la carpeta public_html.
+- **Setup Node.js:** para configurar y ejecutar el servidor.
+- **Administrador de Archivos:** para subir el proyecto compilado dentro de `public_html`.
+- **phpMyAdmin:** para la administración de la base de datos MySQL.
 
-    phpMyAdmin: para gestionar la base de datos MySQL.
+---
 
-Archivos del Proyecto
-Archivos en la raíz
-Archivo	Descripción
-index.html	Archivo HTML base que Vite usa como punto de entrada.
-jsconfig.json	Configuración de JavaScript para mejorar el soporte en editores como VSCode.
-package.json	Lista de dependencias, scripts y metadatos del proyecto.
-package-lock.json	Registro de versiones exactas de las dependencias instaladas.
+Para poder correr el front en local se necesita el comando
 
-Para instalar las dependencias, ejecutar:
+    npm run dev
 
+    
+Para compilar el archivo  y subir al servidor BlueHosting se utiliza el comando
+
+    npm run build
+    
+
+## Archivos del Proyecto
+
+### Archivos en la Raíz
+
+| Archivo               | Descripción                                                                 |
+|------------------------|-----------------------------------------------------------------------------|
+| `index.html`           | Archivo HTML base que Vite usa como punto de entrada.                      |
+| `jsconfig.json`        | Configuración de JavaScript para mejorar el soporte en editores como VSCode.|
+| `package.json`         | Lista de dependencias, scripts y metadatos del proyecto.                   |
+| `package-lock.json`    | Registro de versiones exactas de las dependencias instaladas.              |
+
+### Instalación de Dependencias
+
+```bash
 npm install
+```
 
-Comandos útiles
-
-    Para ejecutar el frontend en desarrollo local:
-
-npm run dev
-
-    Para compilar el proyecto y subirlo al servidor BlueHosting:
-
-npm run build
 
 Estructura de Carpetas
-/backend
+/backend/
 
-Contiene los archivos del servidor. Los más relevantes son:
+Contiene los archivos del servidor. Archivos principales:
 
-    server.ts, server.js: código del servidor que recibe las peticiones del frontend.
-    Este servidor debe ser instalado y ejecutado en el hosting.
+    server.ts, server.js: servidores escritos en TypeScript y JavaScript que reciben las peticiones desde el frontend.
+    Este servidor debe instalarse y ejecutarse en BlueHosting.
 
-    config/: configuración de base de datos (tanto en Python como en TypeScript).
+    config/: configuración de la base de datos.
 
-    routes/: definición de rutas del backend (main.ts).
+        database.ts / database.py
 
-/dist
+    routes/: definición de rutas del backend.
 
-Carpeta generada tras ejecutar npm run build.
-Esta carpeta debe subirse al hosting, incluye:
+        main.ts
+
+/dist/
+
+Carpeta generada automáticamente tras ejecutar npm run build.
+Debe subirse al servidor, incluye:
 
     Archivos HTML y JavaScript compilados.
 
     Archivos estáticos e imágenes requeridas para el funcionamiento del frontend.
 
-/public
+/public/
 
-Contiene imágenes estáticas accesibles públicamente (no se ven afectadas por el proceso de compilación).
-/src (Frontend principal)
+Contiene imágenes estáticas accesibles públicamente, no afectadas por la compilación del proyecto.
+/src/ (Frontend Principal)
 components/
+
+Componentes reutilizables utilizados en el sistema:
 Componente	Descripción
 ChoiceQuestion.tsx	Componente para preguntas de selección múltiple.
-LikertQuestion.tsx	Componente para preguntas de tipo escala Likert.
+LikertQuestion.tsx	Componente para preguntas tipo escala Likert (doble selección).
 PercentageQuestion.tsx	Componente para preguntas de tipo porcentaje.
-VideoRecorder.tsx	Componente que permite grabar video mediante la API de la cámara.
+VideoRecorder.tsx	Componente para grabar video con la cámara del usuario (Webcam API).
 
-    ⚠️ El uso de la cámara debe manejarse con cuidado, debido a posibles conflictos en distintos navegadores.
+    ⚠️ El componente VideoRecorder.tsx requiere especial cuidado debido a posibles conflictos en distintos navegadores con el acceso a la cámara.
 
-Otros componentes:
-IntroStep.tsx, Layout.tsx, QuestionGroup.tsx, QuestionStep.tsx
-Estos definen estructuras reutilizables y la lógica del flujo de preguntas.
+Otros componentes relevantes:
+
+    IntroStep.tsx, Layout.tsx: elementos visuales reutilizables.
+
+    QuestionGroup.tsx, QuestionStep.tsx: componentes que agrupan preguntas o gestionan su flujo.
+
 config/
 
-    questions.ts: archivo donde se definen las preguntas utilizadas en los formularios.
-    Aquí se puede modificar el contenido de las preguntas con video.
+    questions.ts: archivo que define el contenido y configuración de las preguntas.
+    Aquí se modifican las preguntas con grabación de video.
 
 pages/
 
-Define la estructura y diseño de las distintas páginas del sistema.
+Define la estructura de las distintas vistas/páginas de la aplicación:
 Página	Función
 IntroPage.tsx	Página de introducción.
-QuestionPage.tsx	Página de preguntas del cuestionario.
-ReviewPage.tsx	Página de revisión de respuestas.
-SuccessPage.tsx	Página de finalización.
+QuestionPage.tsx	Página principal del cuestionario.
+ReviewPage.tsx	Página para revisar respuestas antes de enviar.
+SuccessPage.tsx	Página que indica el fin exitoso del cuestionario.
 services/
 
-    api.ts: contiene las funciones que gestionan la comunicación entre el frontend y el backend.
-    Esta capa es crucial para el correcto funcionamiento del proyecto.
+Funciones para comunicarse con el servidor:
+
+    api.ts: gestiona las peticiones entre el frontend y el backend.
+
+    Esta parte es crítica para el correcto funcionamiento del proyecto, ya que sincroniza el envío y la recepción de datos entre cliente y servidor.
 
 store/
 
-    formStore.ts: contiene la lógica de estado global utilizando Zustand, útil para compartir datos entre componentes.
-
-Información Adicional
-
-Todos los archivos y recursos se encuentran dentro del hosting indicado.
-Se recomienda revisar el contenido de la carpeta dist/ antes de cada subida, asegurando que el build esté actualizado.
+    formStore.ts: archivo que define el estado global del formulario utilizando la librería Zustand.
 
 
-
-Detalles tecnicos del proyecto
+Detalles técnicos del proyecto
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 # Video Survey Application
 
